@@ -5,28 +5,29 @@ import cursor
 os.system('cls')
 cursor.hide()
 
-voce = ['▄', '▀']  #personagem
+voce = "$"  #personagem
 voceI = 2   #linha
 voceJ = 15  #coluna
 
-simbolo = ''
+teste = "*"  #personagem
+testeI = 8   #linha
+testeJ = 8  #coluna
 
-teste = 0
+teste2 = 0
+
+simbolo = ''
 
 contador = 0 #controla a velocidade de movimentos
 
 while(simbolo != 'o'):
     #posicionar o cursor no começo da tela
     WConio2.gotoxy(0,0)
-    if voceI > 0 and contador % 600 == 0 and teste == 0:
+    if voceI > 0 and contador % 600 == 0:
       voceI += 1
-      if voceJ == 10 and voceI >= 2 and voceI <= 9:
-        teste = 1
-      if voceJ == 11 and voceI >= 2 and voceI <= 9:
-        teste = 0
 
     if voceI > 10:
         voceI = 1
+
 
     print('*' * 25)  #linha de cima
     for i in range(10): #10 linhas
@@ -36,15 +37,19 @@ while(simbolo != 'o'):
         for j in range(23): #23 colunas
            
             if i==voceI and j==voceJ:
-                if voceI == 2:
-                    print(voce[0], end='')
+                print(voce, end='')
+                if voceI==testeI and voceJ==testeJ:
+                    teste = " "
+                    teste2 +=1
+            elif i==testeI and j==testeJ:
+                print(teste, end='')
             else:
                  print(' ', end='')
         
         print('*')  #fecha cada linha 
 
     print('*' * 25) #linha de baixo
-    print(teste)
+    print(teste2)
     print(voceJ)
     print(voceI)
 

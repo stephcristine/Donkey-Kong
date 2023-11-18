@@ -2,13 +2,13 @@ from level1 import Fase1
 from level2 import Fase2
 from points import Points
 
-game1 = Fase1()
+teste = Points()
+game1 = Fase1(Points)
 #game2 = Fase2()
 
 
 
 play = True
-teste = Points(play)
 
 while play:
     

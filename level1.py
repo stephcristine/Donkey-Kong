@@ -1,9 +1,10 @@
 import os
 import WConio2 as WConio2
 import cursor
+from points import Points
 
-class Fase1():
-  def __init__(self):
+class Fase1(Points):
+  def __init__(self,points):
     self.voce = "$"
     self.voceI = 10
     self.voceJ = 2
@@ -29,11 +30,9 @@ class Fase1():
     self.cont = 0
     self.contB = 0
 
-    self.points = 0
-
+    self.total_points = 0
     self.coins = '\033[1;32;40m♦\033[m'
-    self.coinsI = [20,28,39]
-    self.coinsJ = [130,123,50]
+
     self.climb = 0
 
     self.simbolo = ''
@@ -59,8 +58,8 @@ class Fase1():
         print(self.plat, end='')
     elif self.platI == 50 and self.platJ >= 0 and self.platJ <=150:
         print(self.plat, end='')
-    else:   
-        print(" ", end='')
+    else:
+        print(' ', end='')  
         
   def draw_stairs(self,x,y):
       self.stairsJ = x
@@ -200,20 +199,22 @@ class Fase1():
         
         for j in range(150):
 
-            for t in range(3):
-                if i == self.coinsI[t] and j == self.coinsJ[t]:
-                    print(self.coins, end='')
-
             if i == self.barrilI and j == self.barrilJ:
-                print(self.barril, end='' )
+                print(self.barril, end='')
                 self.contB += 1
                 self.barrilJ, self.barrilI = self.move_barrel_X()
-            elif i==self.voceI and j==self.voceJ:
+            elif i == self.voceI and j == self.voceJ:
                 print(self.voce, end='')
                 self.voceJ, self.voceI, self.climb = self.collision()
             else:
-                self.draw_plat(j,i)
-                self.draw_stairs(j,i)
+                self.draw_plat(j, i)
+                self.draw_stairs(j, i)
+                self.draw_coins(j,i)
+                
+
+                
+
+
         print(self.wall)
         self.cont += 1
         
@@ -221,6 +222,7 @@ class Fase1():
         if self.cont % 10 == 0:
            self.barrilJ, self.barrilI = self.move_barrel_Y()
            self.interaction()
-
+           
+    print(self.total_points)
     print(self.floor * 152)
     
