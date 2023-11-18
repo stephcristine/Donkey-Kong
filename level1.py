@@ -4,15 +4,13 @@ import cursor
 
 class Fase1():
   def __init__(self):
-    self.voce = '$'
+    self.voce = "$"
     self.voceI = 10
     self.voceJ = 2
 
     self.plat = '\033[1;31;40m⊠\033[m'
     self.platI = 0
     self.platJ = 0
-
-    self.teste = ''
 
     self.wall = "█"
     self.floor = "▀"
@@ -26,11 +24,16 @@ class Fase1():
     self.stairsI = 0
     self.stairsJ = 0
 
+    self.teste = 1000
+
     self.cont = 0
     self.contB = 0
 
-    self.play = 3
+    self.points = 0
 
+    self.coins = '\033[1;32;40m♦\033[m'
+    self.coinsI = [20,28,39]
+    self.coinsJ = [130,123,50]
     self.climb = 0
 
     self.simbolo = ''
@@ -115,9 +118,9 @@ class Fase1():
             self.barrilJ -= 1
 
     return self.barrilJ,self.barrilI
-  
-  def collision(self):
 
+  def collision(self):
+    
     if self.voceI == 15 and self.voceJ >= 0 and self.voceJ <= 120:
         self.voceI -= 1
     if self.voceI == 22 and self.voceJ >= 30 and self.voceJ <= 150:
@@ -152,7 +155,7 @@ class Fase1():
     else:
         self.climb = 0
    
-    return self.voceJ, self.voceI, self.climb
+    return self.voceJ, self.voceI,self.climb
   
   def gravity(self):
     if self.platI >= self.voceI + 3 and self.cont % 60 == 0 and self.climb == 0:
@@ -196,7 +199,11 @@ class Fase1():
         print(self.wall, end='')
         
         for j in range(150):
-            
+
+            for t in range(3):
+                if i == self.coinsI[t] and j == self.coinsJ[t]:
+                    print(self.coins, end='')
+
             if i == self.barrilI and j == self.barrilJ:
                 print(self.barril, end='' )
                 self.contB += 1
@@ -209,11 +216,11 @@ class Fase1():
                 self.draw_stairs(j,i)
         print(self.wall)
         self.cont += 1
+        
 
         if self.cont % 10 == 0:
            self.barrilJ, self.barrilI = self.move_barrel_Y()
            self.interaction()
 
-    print(self.climb)
-    print(self.voceJ)
     print(self.floor * 152)
+    

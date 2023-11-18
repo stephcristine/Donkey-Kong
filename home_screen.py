@@ -5,7 +5,6 @@ import cursor
 os.system('cls')
 cursor.hide()
 
-
 # Color setting variables
 g = "\u001b[38;5;34m█"  #green
 r = "\u001b[38;5;124m█"  #red
@@ -41,7 +40,7 @@ wall = w
 floor = upw
 roof = dw
 tab = "         "
-arrow_position = 47
+arrow_position = 42
 
 # Lists responsible for drawing the "DONKEY" logo
 D = [("  " + r + r + r + r + r + r + r + r + dr + dr),
@@ -244,7 +243,6 @@ HIGH_SCORES = [(w + "  " + w + " " + w + " " + dw + upw + upw + upw + " " + w + 
 
 #Function that actually draws the home screen
 def home_screen(arrow_position):
-
     for i in range(53):
       if (i == 0):
         print(roof * 150)
@@ -297,7 +295,7 @@ def home_screen(arrow_position):
                 " " * 24 + BARREL[n] + BARREL[n] + "  " + wall + "\n",
                 end='')  #BARREL
         i = 40
-      elif (i == 40 or i == 44 or i == 45 or i == 47 or i == 50 or i == 51):
+      elif (i==1 or i==13 or i == 40 or i == 44 or i == 45 or i == 47 or i == 50 or i == 51):
         print(wall + " " * 148 + wall + "\n", end='')
       elif (i == 41):
         for n in range(3):
@@ -319,17 +317,19 @@ def home_screen(arrow_position):
       symbol =''
 
       if WConio2.kbhit():
-            (tecla, symbol) = WConio2.getch()
-      if symbol == 'w':
-        arrow_position -= 5
-      elif symbol == 's':
-        arrow_position += 5
-      elif symbol == ' ':
-         if arrow_position == 42:
-             return 0
-         elif arrow_position == 47:
-             return 1
+          (tecla,symbol) = WConio2.getch()
+          if symbol == 'w' and arrow_position == 47:
+            arrow_position -= 5
+          elif symbol == 's' and arrow_position == 42:
+            arrow_position += 5
+          elif symbol == ' ':
+            if arrow_position == 42:
+                arrow_position = 0
+            elif arrow_position == 47:
+                arrow_position = 1
+            
+    return arrow_position
+      
+            
 
-
-
-
+   

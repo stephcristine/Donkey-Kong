@@ -5,7 +5,7 @@ import cursor
 os.system('cls')
 cursor.hide()
 
-voce = '$'  #personagem
+voce = ['▄', '▀']  #personagem
 voceI = 2   #linha
 voceJ = 15  #coluna
 
@@ -36,7 +36,8 @@ while(simbolo != 'o'):
         for j in range(23): #23 colunas
            
             if i==voceI and j==voceJ:
-                print(voce, end='')
+                if voceI == 2:
+                    print(voce[0], end='')
             else:
                  print(' ', end='')
         
