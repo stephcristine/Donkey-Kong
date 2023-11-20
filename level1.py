@@ -25,14 +25,20 @@ class Fase1(Points):
     self.stairsI = 0
     self.stairsJ = 0
 
-    self.teste = 1000
-
     self.cont = 0
     self.contB = 0
 
+    self.i = 0
+    self.j=0
+
+    self.coin1 = [5,10]
+    self.coin2 = [28,100]
+
     self.total_points = 0
     self.coins = '\033[1;32;40m♦\033[m'
-
+    self.coinI = 0
+    self.coinJ = 0
+    
     self.climb = 0
 
     self.simbolo = ''
@@ -194,30 +200,26 @@ class Fase1(Points):
     WConio2.gotoxy(0,0)
     self.gravity()
     print(self.roof * 152)
-    for i in range(52):
+    for self.i in range(52):
         print(self.wall, end='')
         
-        for j in range(150):
+        for self.j in range(150):
 
-            if i == self.barrilI and j == self.barrilJ:
+            if self.i == self.barrilI and self.j == self.barrilJ:
                 print(self.barril, end='')
                 self.contB += 1
                 self.barrilJ, self.barrilI = self.move_barrel_X()
-            elif i == self.voceI and j == self.voceJ:
+            elif self.i == self.voceI and self.j == self.voceJ:
                 print(self.voce, end='')
                 self.voceJ, self.voceI, self.climb = self.collision()
+            elif self.i == self.coinI and self.j == self.coinJ:
+                self.draw_coins(self.i, self.j)
             else:
-                self.draw_plat(j, i)
-                self.draw_stairs(j, i)
-                self.draw_coins(j,i)
-                
-
-                
-
+                self.draw_plat(self.j, self.i)
+                self.draw_stairs(self.j, self.i)
 
         print(self.wall)
         self.cont += 1
-        
 
         if self.cont % 10 == 0:
            self.barrilJ, self.barrilI = self.move_barrel_Y()

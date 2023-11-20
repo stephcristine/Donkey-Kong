@@ -12,8 +12,8 @@ play = True
 
 while play:
     
-    #teste.bonus_points()
-
+  #teste.bonus_points()
+  
   game1.draw_screen() 
 
   #game2.draw_screen() 
