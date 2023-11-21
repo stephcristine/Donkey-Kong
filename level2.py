@@ -65,7 +65,7 @@ class Fase2():
     self.barrilJ4 = 8
     self.barrilI4 = 41
     self.contB4 = 0
-    self.play = True
+    self.play2 = True
     self.score = 0
 
     self.coin = "\u001b[38;5;198m♦" 
@@ -270,19 +270,19 @@ class Fase2():
       self.score +=10
       self.is_coin_true[7]= False
 
-    if self.voceI == self.barrilI and self.voceJ == self.barrilJ:
-       self.play = False
-    if self.voceI == self.barrilI2 and self.voceJ == self.barrilJ2:
-       self.play = False
-    if self.voceI == self.barrilI3 and self.voceJ == self.barrilJ3:
-       self.play = False
-    if self.voceI == self.barrilI4 and self.voceJ == self.barrilJ4:
-       self.play = False       
+    if self.voceI == self.barrilI and self.voceJ == self.barrilJ - 1:
+       self.play2 = False
+    if self.voceI == self.barrilI2 and self.voceJ == self.barrilJ2 - 1:
+       self.play2 = False
+    if self.voceI == self.barrilI3 and self.voceJ == self.barrilJ3 - 1:
+       self.play2 = False
+    if self.voceI == self.barrilI4 and self.voceJ == self.barrilJ4 - 1:
+       self.play2 = False       
 
     if self.voceI == self.princessI and self.voceJ == self.princessJ:
-        self.the_end = True
+        self.play2 = False   
 
-    return self.voceJ, self.voceI, self.climb, self.play, self.score, self.is_coin_true, self.the_end
+    return self.voceJ, self.voceI, self.climb, self.play2, self.score, self.is_coin_true, self.the_end
   
   def interaction(self):
       if WConio2.kbhit():
@@ -318,13 +318,31 @@ class Fase2():
       return self.voceI, self.voceJ
 
   def gravity(self):
-    if self.platI >= self.voceI and self.cont % 15 == 0 and self.climb == 0:
+
+    if self.voceI == 5 and self.voceJ >= 55 and self.voceJ <= 95 and self.climb ==0:
+      self.climb = 1
+    if self.voceI == 11 and self.voceJ >= 5 and self.voceJ <= 144 and self.climb ==0:
+      self.climb = 1
+    if self.voceI == 21 and self.voceJ >= 0 and self.voceJ <= 150 and self.climb ==0: 
+      self.climb = 1
+    if self.voceI == 31 and self.voceJ >= 0 and self.voceJ <= 50 and self.climb ==0:
+      self.climb = 1
+    elif self.voceI == 31 and self.voceJ >= 55 and self.voceJ <= 95 and self.climb ==0:
+      self.climb = 1
+    elif self.voceI == 31 and self.voceJ >= 100 and self.voceJ <= 150 and self.climb ==0:
+      self.climb = 1
+    if self.voceI == 41 and self.voceJ >= 5 and self.voceJ <= 144 and self.climb ==0:
+      self.climb = 1
+    if self.voceI == 50 and self.voceJ >= 0 and self.voceJ <= 150 and self.climb ==0:
+      self.climb = 1
+
+    if self.voceJ != self.platJ and self.cont % 10 == 0 and self.climb == 0:
         self.voceI += 1
 
-    return self.voceI
+    return self.voceI, self.climb
   
   def high_scores_file(self, fase1_score, fase2_score):
-    if not self.play:
+    if not self.play2:
         total_score = fase1_score + fase2_score
         with open("high_scores.txt", "a") as scores:
             scores.write(f'  =  {total_score}')
@@ -332,7 +350,7 @@ class Fase2():
   def draw_screen(self):
 
     WConio2.gotoxy(0,0)
-    self.gravity()
+    self.voceI, self.climb = self.gravity()
     print(self.roof * 152)
     for i in range(52):
         print(self.wall, end='')
@@ -356,7 +374,7 @@ class Fase2():
                 self.barrilJ4, self.barrilI4 = self.move_barrel_X4()
             elif i==self.voceI and j==self.voceJ:
                 print(self.voce, end='')
-                self.voceJ, self.voceI, self.climb, self.play, self.score, self.is_coin_true, self.the_end = self.collision()
+                self.voceJ, self.voceI, self.climb, self.play2, self.score, self.is_coin_true, self.the_end = self.collision()
             elif i == self.princessI and j == self.princessJ:
                 print(self.princess, end='')
                 self.contP += 1
@@ -368,7 +386,7 @@ class Fase2():
         self.cont += 1
         if self.cont % 10 == 0:
           self.interaction()
-        self.high_scores_file(1,2)
+        self.high_scores_file(1,self.score)
 
     print(self.floor * 152)
     print("                      SCORE  =  ",self.score)

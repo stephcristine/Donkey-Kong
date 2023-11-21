@@ -4,11 +4,11 @@ import cursor
 
 class Fase1():
   def __init__(self,next_level,play):
-    self.play = True
+    self.play1 = True
     self.next_level = False
 
     self.voce = '\033[1;34;40m█\033[m'
-    self.voceI = 10
+    self.voceI = 48
     self.voceJ = 2
 
     self.princess = "\u001b[38;5;200m█"
@@ -137,22 +137,22 @@ class Fase1():
   def move_barrel_X(self):
 
     if self.barrilI == 14 and self.barrilJ >= 0 and self.barrilJ <= 130:
-        if self.contB % 6 == 0:
+        if self.contB % 2 == 0:
             self.barrilJ += 1
     if self.barrilI == 21 and self.barrilJ >= 10 and self.barrilJ <= 131:
-        if self.contB % 6 == 0:
+        if self.contB % 2 == 0:
             self.barrilJ -= 1
     if self.barrilI == 28 and self.barrilJ >= 0 and self.barrilJ <= 130:
-        if self.contB % 6 == 0:
+        if self.contB % 2 == 0:
             self.barrilJ += 1
     if self.barrilI == 35 and self.barrilJ >= 10 and self.barrilJ <= 131:
-        if self.contB % 6 == 0:
+        if self.contB % 2 == 0:
             self.barrilJ -= 1
     if self.barrilI == 42 and self.barrilJ >= 0 and self.barrilJ <= 130:
-        if self.contB % 6 == 0:
+        if self.contB % 2 == 0:
             self.barrilJ += 1
     if self.barrilI == 49 and self.barrilJ >= 0 and self.barrilJ <= 131:
-        if self.contB % 6 == 0:
+        if self.contB % 2 == 0:
             self.barrilJ -= 1
 
     if self.barrilI == 49 and self.barrilJ == 0:
@@ -208,10 +208,10 @@ class Fase1():
     else:
         self.climb = 0
 
-    if self.voceI == self.barrilI and self.voceJ == self.barrilJ:
-       self.play = False
+    if self.voceI == self.barrilI and self.voceJ == self.barrilJ - 1:
+      self.play1 = False
    
-    return self.voceJ, self.voceI, self.climb, self.play
+    return self.voceJ, self.voceI, self.climb, self.play1
   
   def points(self):
      
@@ -243,7 +243,23 @@ class Fase1():
     return self.score, self.catch, self.next_level
 
   def gravity(self):
-    if self.platI >= self.voceI + 3 and self.cont % 60 == 0 and self.climb == 0:
+    
+    if self.platI == 7 and self.platJ >= 49 and self.platJ <= 99:
+      self.climb = 1
+    if self.voceI == 14 and self.voceJ >= 0 and self.voceJ <= 120:
+      self.climb = 1
+    if self.voceI == 21 and self.voceJ >= 30 and self.voceJ <= 150:
+      self.climb = 1
+    if self.voceI == 28 and self.voceJ >= 0 and self.voceJ <= 120:
+      self.climb = 1
+    if self.voceI == 35 and self.voceJ >= 30 and self.voceJ <= 150:
+      self.climb = 1
+    if self.voceI == 42 and self.voceJ >= 0 and self.voceJ <= 120:
+      self.climb = 1
+    if self.voceI == 49 and self.voceJ >= 0 and self.voceJ <= 150:
+      self.climb = 1
+
+    if self.voceJ != self.platJ and self.cont % 10 == 0 and self.climb == 0:
         self.voceI += 1
 
     return self.voceI
@@ -292,7 +308,7 @@ class Fase1():
                 self.barrilJ, self.barrilI = self.move_barrel_X()
             elif i == self.voceI and j == self.voceJ:
                 print(self.voce, end='')
-                self.voceJ, self.voceI, self.climb, self.play = self.collision()   
+                self.voceJ, self.voceI, self.climb, self.play1 = self.collision()   
             elif i == self.princessI and j == self.princessJ:
                 print(self.princess, end='')
                 self.contP += 1

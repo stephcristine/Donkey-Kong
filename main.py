@@ -14,16 +14,17 @@ cursor.hide()
 
 the_end = False
 next_level = False
-play = True
+play1 = True
+play2 = True
 
-one = Fase1(next_level,play)
-two = Fase2(the_end, play)
+one = Fase1(next_level,play1)
+two = Fase2(the_end, play2)
 
 arrow_position = 42
 cont = 0
 go_to = 0
 
-while one.play or two.play:
+while one.play1 or two.play2:
     WConio2.gotoxy(0, 0)
 
     if cont == 0 or go_to==1:
@@ -33,7 +34,6 @@ while one.play or two.play:
         go_to=0
         cont=0
         arrow_position = home_screen(arrow_position)
-        print(arrow_position)
     
     if arrow_position == 0 and one.next_level == False:
         if cont==1:
@@ -45,16 +45,8 @@ while one.play or two.play:
             go_to = high_scores()
         cont = 2
 
-    if one.play and one.next_level:
-        #between = between_levels_1(one.score)
-        #if between:
-            two.draw_screen()
-    #
-    #if two.the_end == True:
-    #    last_screen()
-#
-    #if one.play == False or two.play == False:  
-    #    go_to=0
-    #    cont=0
-    #    arrow_position = home_screen(arrow_position)
-    #    print(arrow_position)
+    if one.play1 and one.next_level:
+        two.draw_screen()
+    
+    if one.play1 == False or two.play2 == False:
+        break

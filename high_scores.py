@@ -2,10 +2,6 @@ import os
 import cursor
 import WConio2
 
-os.system('cls')
-cursor.hide()
-
-
 # Color setting variables
 g = "\u001b[38;5;34m█"  #green
 r = "\u001b[38;5;124m█"  #red
@@ -163,10 +159,11 @@ PRESS_X = [(r + upr + r + " " + dr + upr + r + "  " + dr + upr + dr + " " + r + 
 def high_scores():
 
   def file():
-    scores = (open("high_scores.txt", "r"))
+    path = "C:/Users/Aluno/Desktop/Donkey-Kong/points.txt"
+    scores = (open(path, "r"))
     rows = [int(row.strip()) for row in scores.readlines()]  
     rows.sort(reverse=True)  
-    for n in range(5):
+    for n in range(len(rows)):
               print(wall + " " * 67 + str(n+1) +". " + str(rows[n]) + " " * (78 - len(str(rows[n]))) + wall + "\n", end='')
     return (len(rows))
   
@@ -181,7 +178,7 @@ def high_scores():
               "            " + wall + "\n",
               end='')
       i = 12  #DONKEY KONG TITLE
-    elif (i == 12 or i == 14 or (i >= 18 and i <= 20) or i==47 or (i>=49 and i<=52)):
+    elif (i == 12 or i == 14 or (i >= 18 and i <= 20) or i==47 or (i>=49 and i<=51)):
       print(wall + " " * 148 + wall + "\n", end='')
     elif (i == 15):
       for n in range(3):
@@ -191,23 +188,19 @@ def high_scores():
     elif (i == 21):
       len_scores =file()
       i += len_scores
-    elif (i>26 and i<= 45):
+    elif (i>21 and i<= 45):
       print(wall + " " * 148 + wall + "\n", end='')
     elif (i==46):
       for n in range(3):
         print(wall + " " *58 + PRESS_X[n] + " "*61 + w + "\n", end = '')
       i == 49
-    elif (i==53):
+    elif (i==52):
       print(floor * 150)
-
-    symbol = ''
     if WConio2.kbhit():
         (tecla, symbol) = WConio2.getch()
-    if symbol== "X" or symbol =="x":
+    symbol = ""
+    if symbol== "x" or symbol =="X":
       return(1)
 
 
-
-
-  
-
+teste = high_scores()
