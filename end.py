@@ -1,9 +1,6 @@
 import os
 import cursor
-import WConio2
-
-os.system('cls')
-cursor.hide()
+import WConio2 as WConio2
 
 
 # Color setting variables
@@ -41,6 +38,7 @@ wall = w
 floor = upw
 roof = dw
 tab = "         "
+arrow_position = 47
 
 # Lists responsible for drawing the "DONKEY" logo
 D = [("  " + r + r + r + r + r + r + r + r + dr + dr),
@@ -141,73 +139,57 @@ G = [
      "  ")
 ]
 
-# List responsible for drawing the "HIGH SCORES" subtitle
-HIGH_SCORES = [(w + "  " + w + " " + w + " " + dw + upw + upw + upw + " " + w + "  " + w +
-     "   " + w + upw + upw + " " + w + upw + upw + " " + w + upw + w + " " +
-     dw + upw + w + "  " + dw + upw + dw + " " + w + upw + upw),
-    (w + upw + upw + w + " " + w + " " + w + " " + dw + dw + " " + w + upw +
-     upw + w + "   " + w + dw + dw + " " + w + "   " + w + " " + w + " " + w +
-     dw + w + "  " + w + dw + w + " " + w + dw + dw),
-    (w + "  " + w + " " + w + " " + upw + dw + dw + w + " " + w + "  " + w +
-     "   " + dw + dw + w + " " + w + dw + dw + " " + w + dw + w + " " + w +
-     " " + upw + w + " " + upw + dw + dw + " " + dw + dw + w)]
-
-# Lists responsible for drawing the "PRESS X" TEXT
-
-PRESS_X = [(r + upr + r + " " + dr + upr + r + "  " + dr + upr + dr + " " + r + upr + upr + " " + r + upr + upr + "    " + upr +dr + " " + dr + upr),
-        (r + upr + upr + " " + r +
-          dr + r + "  " + r + dr + r + " " + r + dr + dr + " " + r + dr + dr + "      " + r + "  "),
-        (r + "   " +  r + " "+ upr + r + " " + upr + dr + dr + " " + dr + dr + r + " " + dr + dr + r + "    " + dr + upr + " "+ upr + dr) ]
 
 
-def high_scores():
+#lists responsible for drawing the other objects of the screen
 
-  def file():
-    scores = (open("high_scores.txt", "r"))
-    rows = [int(row.strip()) for row in scores.readlines()]  
-    rows.sort(reverse=True)  
-    for n in range(5):
-              print(wall + " " * 67 + str(n+1) +". " + str(rows[n]) + " " * (78 - len(str(rows[n]))) + wall + "\n", end='')
-    return (len(rows))
-  
+MARIO = [("           " + r + r + r + r + r + r + r + r + r + "            "),
+    ("         " + r + r + r + r + r + r + r + r + r + r + r + r + r + r + r + r + "       "),
+    ("         " + br + br + br + br + br + br + br + br + lbr + lbr + lbr +lbr + "           "),
+    ("       " + br + br + lbr + lbr+ lbr + lbr + br + br + lbr + lbr + lbr +lbr + "  " + lbr + lbr + lbr + lbr + lbr + lbr + "     "),
+    ("       " + br + br + lbr + lbr+ lbr + lbr + br + br + br + br + lbr +lbr + lbr + br + br + lbr + lbr + lbr + lbr + lbr + lbr + lbr + "   "),
+    ("     " + br + br + br + br + br + br+ lbr + lbr + lbr + lbr + lbr + lbr + lbr +lbr + br + br + br + br + br + br + br + br + "     "),
+    ("           "+ lbr + lbr + lbr + lbr + lbr + lbr + lbr +lbr + lbr + lbr + lbr + lbr + lbr + lbr + "       "),
+    ("     " + r + r + r + r + r + r + r + r + b + b + b + b + r + r + r + r + "       " + w +w +w + w),
+    (w + w + w + w + w + r + r + r + r + r + r + r + r + b + b + b + b + b + b + r + r + r + r + r + r + w + w + w + w + w + w + w ),
+    (w + w + w + w + w + w + w + "  " + r + r + r + r + b + b + b + y + y + b + b + b + r + r + r + r + r + r + w + w + w + w + w ),
+    (w +w +w + w+"     " + b + b + b + b + b + b + b + b + b + b + b + b + "      " + br+ br + br+ "  "),
+    ("       " + b + b + b + b + b + b + b + b + b + b + b + b + b + b + b + b + b + b + br + br + br + br + br+ "  "),
+    ("     " + b + b + b + b + b + b + b + b + b + b + b + b + b + b + b + b +  b + b + b + b + br + br + br + br + br+ "  "),
+    ("   " + br + br + br + br + br + br + b + b + b + b + b + "      " + b + b +  b + b + b + br + br + br + br + br + "  "),
+    ("   " + br + br + br + br + br + br + "                       "),
+    ("     " + br + br + br + br + br + br + "                     "),]
 
+
+simbolo=''  
+
+# Function that actually draws the home screen
+def last_screen():
   for i in range(53):
     if (i == 0):
-      print(roof * 150)  #ROOF
+      print(roof * 150)
+    elif (i== 1 or i==13 or (i >=14 and i<=26) or (i >=44 and i<=49) or (i>=50 and i<=51)):
+      print(wall + " " * 148 + wall + "\n", end='')
     elif (i == 2):
       for n in range(10):
-        print(wall + " " * 9 + (D[n] + O[n] + N[n] + K[n] + E[n] + Y[n] +
-                                K2[n] + O2[n] + N2[n] + G[n]) +
+        print(wall + "         " + (D[n] + O[n] + N[n] + K[n] + E[n] + Y[n] +
+                                    K2[n] + O2[n] + N2[n] + G[n]) +
               "            " + wall + "\n",
-              end='')
-      i = 12  #DONKEY KONG TITLE
-    elif (i == 12 or i == 14 or (i >= 18 and i <= 20) or i==47 or (i>=49 and i<=52)):
-      print(wall + " " * 148 + wall + "\n", end='')
-    elif (i == 15):
-      for n in range(3):
-        print(wall + " " * 53 + HIGH_SCORES[n] + " " * 52 + wall + "\n",
-              end='')
-      i == 18
-    elif (i == 21):
-      len_scores =file()
-      i += len_scores
-    elif (i>26 and i<= 45):
-      print(wall + " " * 148 + wall + "\n", end='')
-    elif (i==46):
-      for n in range(3):
-        print(wall + " " *58 + PRESS_X[n] + " "*61 + w + "\n", end = '')
-      i == 49
-    elif (i==53):
+              end='')  # #DONKEY KONG TITLE
+      i = 12
+
+    elif (i == 27):
+        for i in range(16):
+            print(wall + " " * 58 + MARIO[i] + " " * 58 + wall + "\n", end='')
+        i==43
+
+    elif (i == 52):
       print(floor * 150)
 
-    symbol = ''
+    simbolo=''  
+
     if WConio2.kbhit():
-        (tecla, symbol) = WConio2.getch()
-    if symbol== "X" or symbol =="x":
-      return(1)
-
-
-
-
-  
-
+        (tecla, simbolo) = WConio2.getch()
+    if simbolo == 'x' or simbolo == 'X':
+        return(1)
+(last_screen)

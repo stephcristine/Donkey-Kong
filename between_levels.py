@@ -1,6 +1,4 @@
-import os
-import cursor
-
+import WConio2 as WConio2
 
 # Color setting variables
 g = "\u001b[38;5;34m█"  #green
@@ -38,6 +36,7 @@ floor = upw
 roof = dw
 tab = "         "
 arrow_position = 47
+
 
 # Lists responsible for drawing the "DONKEY" logo
 D = [("  " + r + r + r + r + r + r + r + r + dr + dr),
@@ -226,10 +225,11 @@ POINTS = [(r + upr + upr + dr),
   
 
 # Function that actually draws the home screen
-def between_levels_1(score, lives):
-  lives = lives
+def between_levels_1(score):
+  between = True
+  lives = 1
   score = score
-  for i in range(53):
+  for i in range(52):
     if (i == 0):
       print(roof * 150)
     elif (i== 1 or i==13 or i ==14 or i == 25 or i==26 or i ==44 or i==45 or (i>=50 and i<=51)):
@@ -259,10 +259,11 @@ def between_levels_1(score, lives):
     elif (i == 52):
       print(floor * 150)
 
+    symbol =''
 
-
-  
-
-between_levels_1(46464631,3)
-# next_screen = home_screen()
-# print(next_screen)
+    if WConio2.kbhit():
+          (tecla,symbol) = WConio2.getch()
+          if symbol == ' ':
+            between =  False
+            
+  return(between)

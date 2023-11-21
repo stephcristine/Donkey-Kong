@@ -3,8 +3,9 @@ import WConio2 as WConio2
 import cursor
 
 class Fase1():
-  def __init__(self,play):
-    self.play = play
+  def __init__(self,next_level,play):
+    self.play = True
+    self.next_level = False
 
     self.voce = '\033[1;34;40m█\033[m'
     self.voceI = 10
@@ -24,26 +25,24 @@ class Fase1():
     self.floor ='\033[37m▀\033[m'
     self.roof ='\033[37m▄\033[m'
 
-    self.barril = "▄"
+    self.barril = "\u001b[38;5;179m▄"
     self.barril2 = "▄"
     self.barrilI = 14
     self.barrilJ = 1
 
-    self.stairs = "H"
+    self.stairs = '\033[37mH\033[m'
     self.stairsI = 0
     self.stairsJ = 0
 
     self.cont = 0
     self.contB = 0
 
-    self.coin1 = [5,10]
-    self.coin2 = [28,100]
-
-    self.total_points = 0
-    self.coins = '\033[1;32;40m♦\033[m'
+    self.score = 0
+    self.coin = "\u001b[38;5;198m♦"  
+    self.catch = [False,False,False,False,False,False,False]
     self.coinI = 0
     self.coinJ = 0
-    
+
     self.climb = 0
 
     self.simbolo = ''
@@ -55,8 +54,10 @@ class Fase1():
     self.platJ = x
     self.platI = y
     self.stairsJ = x
-    self.stairsI = y
-    
+    self.stairsI = y 
+    self.coinJ = x
+    self.coinI = y
+    #platforms
     if self.platI == 8 and self.platJ >= 50 and self.platJ <= 100:
        print(self.plat, end='')
     elif self.platI == 15 and self.platJ >= 0 and self.platJ <=120:
@@ -71,6 +72,7 @@ class Fase1():
         print(self.plat, end='')
     elif self.platI == 50 and self.platJ >= 0 and self.platJ <=150:
         print(self.plat, end='')
+    #stairs
     elif self.stairsJ == 90 and self.stairsI >= 9 and self.stairsI <= 14:
        print(self.stairs,end='')  
     elif self.stairsJ == 110 and self.stairsI >= 16 and self.stairsI <= 21:
@@ -82,7 +84,36 @@ class Fase1():
     elif self.stairsJ == 45 and self.stairsI >= 37 and self.stairsI <= 42:
         print(self.stairs,end='')
     elif self.stairsJ == 119 and self.stairsI >= 44 and self.stairsI <= 49:
-        print(self.stairs,end='')      
+        print(self.stairs,end='')
+    #coins
+    elif self.coinI == 14 and self.coinJ == 10 and self.catch[0] == False:
+      print(self.coin, end='')
+      if self.catch[0] == True:
+         print(" ",end='')
+    elif self.coinI == 18 and self.coinJ == 125 and self.catch[1] == False:
+      print(self.coin, end='')
+      if self.catch[1] == True:
+         print(" ",end='')
+    elif self.coinI == 24 and self.coinJ == 35 and self.catch[2] == False:
+      print(self.coin, end='')
+      if self.catch[2] == True:
+         print(" ",end='')
+    elif self.coinI == 28 and self.coinJ == 124 and self.catch[3] == False:
+      print(self.coin, end='')
+      if self.catch[3] == True:
+         print(" ",end='')
+    elif self.coinI == 34 and self.coinJ == 140 and self.catch[4] == False:
+      print(self.coin, end='')
+      if self.catch[4] == True:
+         print(" ",end='')
+    elif self.coinI == 41 and self.coinJ == 5 and self.catch[5] == False:
+      print(self.coin, end='')
+      if self.catch[5] == True:
+         print(" ",end='')
+    elif self.coinI == 49 and self.coinJ == 141 and self.catch[6] == False:
+      print(self.coin, end='')
+      if self.catch[6] == True:
+         print(" ",end='')
     else:
         print(' ', end='')  
         
@@ -177,11 +208,40 @@ class Fase1():
     else:
         self.climb = 0
 
-    if self.voceI == self.princessI and self.voceJ == self.princessJ:
+    if self.voceI == self.barrilI and self.voceJ == self.barrilJ:
        self.play = False
    
-    return self.voceJ, self.voceI,self.climb,self.play
+    return self.voceJ, self.voceI, self.climb, self.play
   
+  def points(self):
+     
+    if self.voceI == 14 and self.voceJ == 10 and self.catch[0] == False:
+      self.score += 10
+      self.catch[0] = True
+    elif self.voceI == 18 and self.voceJ == 125 and self.catch[1] == False:
+      self.score += 10
+      self.catch[1] = True
+    elif self.voceI == 24 and self.voceJ == 35 and self.catch[2] == False:
+      self.score += 10
+      self.catch[2] = True
+    elif self.voceI == 28 and self.voceJ == 124 and self.catch[3] == False:
+      self.score += 10
+      self.catch[3] = True
+    elif self.voceI == 34 and self.voceJ == 140 and self.catch[4] == False:
+      self.score += 10
+      self.catch[4] = True
+    elif self.voceI == 41 and self.voceJ == 5 and self.catch[5] == False:
+      self.score += 10
+      self.catch[5] = True
+    elif self.voceI == 49 and self.voceJ == 141 and self.catch[6] == False:
+      self.score += 10
+      self.catch[6] = True
+
+    if self.voceI == self.princessI and self.voceJ == self.princessJ:
+       self.next_level = True
+
+    return self.score, self.catch, self.next_level
+
   def gravity(self):
     if self.platI >= self.voceI + 3 and self.cont % 60 == 0 and self.climb == 0:
         self.voceI += 1
@@ -219,6 +279,7 @@ class Fase1():
 
     WConio2.gotoxy(0,0)
     self.gravity()
+    self.interaction()  
     print(self.roof * 152)
     for i in range(52):
         print(self.wall, end='')
@@ -229,25 +290,22 @@ class Fase1():
                 print(self.barril, end='')
                 self.contB += 1
                 self.barrilJ, self.barrilI = self.move_barrel_X()
-                
             elif i == self.voceI and j == self.voceJ:
                 print(self.voce, end='')
-                self.voceJ, self.voceI, self.climb, self.play = self.collision()
+                self.voceJ, self.voceI, self.climb, self.play = self.collision()   
             elif i == self.princessI and j == self.princessJ:
                 print(self.princess, end='')
                 self.contP += 1
                 self.move_princess()
             else:
-                self.draw_elements(j, i)  
+                self.draw_elements(j,i)  
+                self.score,self.catch, self.next_level = self.points()
 
         print(self.wall)
         self.cont += 1
 
         if self.cont % 10 == 0:
            self.barrilJ, self.barrilI = self.move_barrel_Y()
-           self.interaction()
-           
+            
     print(self.floor * 152)
-    print(self.play)
-    print(self.princessJ)
-    
+    print("      SCORE  =  ",self.score)

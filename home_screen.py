@@ -328,7 +328,7 @@ def home_screen(arrow_position):
             elif arrow_position == 47:
                 arrow_position = 1
             
-    return arrow_position
+    return(arrow_position)
       
             
 
